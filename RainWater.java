@@ -4,13 +4,13 @@ public class RainWater {
 //    может задержать после дождя.
 
     public static void main(String[] args) {
-        int[] height = {3,1,0,2,1,0,1,3,2,1,2,1};
+        int[] height = {0,1,0,2,1,0,1,3,2,1,2,1};
         int[] water = new int[height.length];
         int maxHeightLeft = height[0];
         int maxHeightRight = height[2];
         int count = 0;
 
-        for (int i = 1; i < height.length; i++) {
+        for (int i = 1; i < height.length-1; i++) {
             if (height[i] < maxHeightLeft) {
                 for (int j=i; j < height.length; j++){
                     if (height[j] <= maxHeightRight)
@@ -22,17 +22,20 @@ public class RainWater {
                             water[k] =  Math.min(maxHeightLeft, maxHeightRight) - height[k];
                         }
                         if (maxHeightLeft < maxHeightRight) maxHeightLeft = maxHeightRight;
-                        if (i != height.length-1)
-                            maxHeightRight = height[i+1];
+            if (j != height.length)
+                            maxHeightRight = height[j+1];
                         i = j; break;
                     } else maxHeightRight = height[j];
                 }
             } else maxHeightLeft = height[i];
         }
+
+        System.out.println("Water flooded the cells:");
         for (int i = 0; i < water.length; i++) {
             System.out.print(water[i] + " ");
-
+            count += water[i];
         }
+        System.out.println(" ");
+        System.out.print("How much water it can trap after raining: " + count);
     }
-
- }
+}
